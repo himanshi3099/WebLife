@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>The XMLHttpRequest Object</h2>
+
+<p id="demo">Let AJAX change this text.</p>
+
+<button type="button" onclick="loadDoc()">Change Content</button>
+  <br>
+  <table id ="demo">
+    
+  </table>
+
+<script>
+function loadDoc() {
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+if (this.readyState == 4 && this.status == 200) {
+  var string = "<tr><th>FirstName</th><th>LastName</th><th>Email</th></tr>";
+var result = JSON.parse(this.responseText);
+console.log(result)
+
+for(i=0;i<result.data.length;i++)
+  {
+    string= string + "<tr><br>" + "<td" + result.data[i].id + "</td>" + "<td>" + result.data[i].first_name +
+      "</td>" + "<td>" + result.data[i].last_name + "</td>" + "<td>" + result.data[i].email + "</td></tr>"; 
+  }
+  document.getElementById("demo").innerHTML = string;
+}
+};
+xhttp.open("GET", "https://reqres.in/api/users?page=2", true);
+xhttp.send();
+}
+</script>
+
+</body>
+</html>
